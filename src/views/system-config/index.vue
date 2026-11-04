@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { SystemConfig, ConfigGroup, ConfigType } from '@/types/systemConfig'
 import { CONFIG_GROUPS, DEFAULT_CONFIGS } from '@/types/systemConfig'
-
-const { t } = useI18n()
 
 const activeGroup = ref<ConfigGroup>('security')
 const configList = ref<SystemConfig[]>([])

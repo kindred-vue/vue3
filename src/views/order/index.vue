@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
-  getOrderListApi,
-  getOrderDetailApi,
   createOrderApi,
   updateOrderApi,
   deleteOrderApi,
@@ -12,8 +10,7 @@ import {
   addOrderAttachmentApi,
   deleteOrderAttachmentApi,
   addOrderRemarkApi,
-  deleteOrderRemarkApi,
-  getOrderStatisticsApi
+  deleteOrderRemarkApi
 } from '@/api/modules/order'
 import type { Order, OrderForm, OrderItem, Attachment, Remark, OrderStatistics } from '@/types/order'
 import { ORDER_TYPES, ORDER_STATUSES, ORDER_STATUS_TRANSITIONS } from '@/types/order'
@@ -85,12 +82,6 @@ const statistics = ref<OrderStatistics>({
   cancelledCount: 0,
   statusDistribution: [],
   dailyTrend: []
-})
-
-// 可用的状态转换
-const availableTransitions = computed(() => {
-  if (!currentOrder.value) return []
-  return ORDER_STATUS_TRANSITIONS.filter(t => t.fromStatus === currentOrder.value?.status)
 })
 
 // 加载订单列表
@@ -757,7 +748,7 @@ onMounted(() => {
           <el-button type="primary" size="small" @click="handleAddItem">添加资产</el-button>
           <el-table :data="orderItems" border size="small" style="margin-top: 10px">
             <el-table-column label="资产编号" width="150">
-              <template #default="{ row, $index }">
+              <template #default="{ row }">
                 <el-input v-model="row.assetCode" placeholder="请输入" size="small" />
               </template>
             </el-table-column>
@@ -797,7 +788,7 @@ onMounted(() => {
         <el-row :gutter="20" style="margin-top: 20px">
           <el-col :span="8">
             <el-form-item label="订单金额">
-              <el-input-number v-model="formData.totalAmount" :precision="2" :disabled style="width: 100%" />
+              <el-input-number v-model="formData.totalAmount" :precision="2"  disabled style="width: 100%" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -807,7 +798,7 @@ onMounted(() => {
           </el-col>
           <el-col :span="8">
             <el-form-item label="实际金额">
-              <el-input-number v-model="formData.actualAmount" :precision="2" :disabled style="width: 100%" />
+              <el-input-number v-model="formData.actualAmount" :precision="2"  disabled style="width: 100%" />
             </el-form-item>
           </el-col>
         </el-row>

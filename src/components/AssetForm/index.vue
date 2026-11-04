@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, watch, computed } from 'vue'
+import { reactive, watch, computed } from 'vue'
 import type { FieldDefinition } from '@/types/assetType'
 
 interface Props {

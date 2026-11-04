@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Tenant, TenantQuota, TenantConfig } from '@/types/tenant'
-
-const { t } = useI18n()
 
 const searchForm = reactive({
   keyword: '',
@@ -158,20 +155,6 @@ const handleDelete = (row: Tenant) => {
     tableData.value = tableData.value.filter(item => item.id !== row.id)
     ElMessage.success('删除成功')
   }).catch(() => {})
-}
-
-const handleStatusChange = (row: Tenant) => {
-  const action = row.status === 1 ? '停用' : '启用'
-  ElMessageBox.confirm(`确定要${action}该租户吗？`, '警告', {
-    confirmButtonText: '确认',
-    cancelButtonText: '取消',
-    type: 'warning'
-  }).then(() => {
-    row.status = row.status === 1 ? 0 : 1
-    ElMessage.success('操作成功')
-  }).catch(() => {
-    row.status = row.status === 1 ? 0 : 1
-  })
 }
 
 const handleSave = () => {

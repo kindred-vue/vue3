@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import {
-  getPendingTasksApi,
-  getCompletedTasksApi,
-  getApprovalTaskDetailApi,
   approveTaskApi,
   rejectTaskApi,
   transferTaskApi
 } from '@/api/modules/approval'
 import type { ApprovalTask, ApprovalInstance, ApprovalRecord } from '@/types/approval'
-
-const { t } = useI18n()
 
 const activeTab = ref('pending')
 

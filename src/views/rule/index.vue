@@ -3,7 +3,6 @@ import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
-  getRuleListApi,
   createRuleApi,
   updateRuleApi,
   deleteRuleApi,
@@ -371,10 +370,6 @@ const handleSave = async () => {
 
 const getTriggerTypeLabel = (type: string) => {
   return TRIGGER_TYPES.find(t => t.value === type)?.label || type
-}
-
-const getStatusType = (status: number) => {
-  return status === 1 ? 'success' : 'info'
 }
 
 const handlePageChange = (page: number) => {
