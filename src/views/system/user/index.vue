@@ -2,9 +2,9 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getUserListApi, createUserApi, updateUserApi, deleteUserApi, updateUserStatusApi, assignUserRolesApi, getRoleListApi } from '@/api/modules/user'
+import { createUserApi, updateUserApi, deleteUserApi, updateUserStatusApi, assignUserRolesApi } from '@/api/modules/user'
 import type { User, UserForm, Role } from '@/types/user'
-import type { UserListParams, UserListResponse } from '@/api/modules/user'
+import type { UserListResponse } from '@/api/modules/user'
 
 const { t } = useI18n()
 
@@ -51,20 +51,14 @@ const currentUser = ref<User | null>(null)
 const loadUserList = async () => {
   loading.value = true
   try {
-    const params: UserListParams = {
-      page: pagination.page,
-      size: pagination.size,
-      username: searchForm.username || undefined,
-      status: searchForm.status ? Number(searchForm.status) : undefined
-    }
-    
     // Mock 数据（实际应该调用 API）
     const mockResponse: UserListResponse = {
       list: [
         { 
           id: 1, 
           username: 'admin', 
-          nickname: '系统管理员', 
+          nickname: '系统管理员',
+          avatar: '', 
           email: 'admin@universalasset.com', 
           phone: '13800138000', 
           status: 1, 
@@ -75,7 +69,8 @@ const loadUserList = async () => {
         { 
           id: 2, 
           username: 'zhangsan', 
-          nickname: '张三', 
+          nickname: '张三',
+          avatar: '', 
           email: 'zhangsan@example.com', 
           phone: '13800138001', 
           status: 1, 
@@ -86,7 +81,8 @@ const loadUserList = async () => {
         { 
           id: 3, 
           username: 'lisi', 
-          nickname: '李四', 
+          nickname: '李四',
+          avatar: '', 
           email: 'lisi@example.com', 
           phone: '13800138002', 
           status: 1, 
@@ -97,7 +93,8 @@ const loadUserList = async () => {
         { 
           id: 4, 
           username: 'wangwu', 
-          nickname: '王五', 
+          nickname: '王五',
+          avatar: '', 
           email: 'wangwu@example.com', 
           phone: '13800138003', 
           status: 0, 
@@ -108,7 +105,8 @@ const loadUserList = async () => {
         { 
           id: 5, 
           username: 'zhaoliu', 
-          nickname: '赵六', 
+          nickname: '赵六',
+          avatar: '', 
           email: 'zhaoliu@example.com', 
           phone: '13800138004', 
           status: 1, 
@@ -167,7 +165,8 @@ const handleAdd = () => {
     id: 0, 
     username: '', 
     password: '',
-    nickname: '', 
+    nickname: '',
+    avatar: '', 
     email: '', 
     phone: '', 
     status: 1,

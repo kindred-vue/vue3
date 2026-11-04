@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
 import { getDashboardStatisticsApi } from '@/api/modules/dashboard'
 import type { DashboardStatistics, Widget } from '@/types/dashboard'
 import { WIDGET_TYPES } from '@/types/dashboard'
 
-const { t } = useI18n()
 const userStore = useUserStore()
 
 const loading = ref(false)
@@ -51,16 +50,6 @@ const statistics = ref<DashboardStatistics>({
   ]
 })
 
-const widgets = ref<Widget[]>([
-  {
-    id: 1,
-    type: 'statistic',
-    title: '资产总数',
-    config: {},
-    dataSource: { type: 'api', apiPath: '/api/assets/count' }
-  }
-])
-
 const stats = computed(() => [
   { title: '资产总数', value: statistics.value.totalAssets, icon: 'Box', color: '#409eff', trend: '+5.2%', trendUp: true },
   { title: '订单总数', value: statistics.value.totalOrders, icon: 'Document', color: '#67c23a', trend: '+3.1%', trendUp: true },
@@ -103,10 +92,6 @@ const handleAddWidget = (type: string) => {
     dataSource: { type: 'api' }
   }
   widgetDialogVisible.value = true
-}
-
-const handleDeleteWidget = (widgetId: number) => {
-  widgets.value = widgets.value.filter(w => w.id !== widgetId)
 }
 
 const handleExportPDF = () => {

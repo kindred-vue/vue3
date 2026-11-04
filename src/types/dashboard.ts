@@ -66,7 +66,7 @@ export interface DashboardStatistics {
   assetTrend: { date: string; count: number }[]
   orderTrend: { date: string; count: number }[]
   assetDistribution: { name: string; value: number }[]
-  orderStatusDistribution: { name: string; value: number }[]
+  orderStatusDistribution: { name: string; count: number }[]
 }
 
 export const WIDGET_TYPES = [

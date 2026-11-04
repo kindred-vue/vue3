@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useNotificationStore } from '@/stores/notification'
 import type { Notification, NotificationType, NotificationPreferences } from '@/types/notification'
 import { NOTIFICATION_TYPES } from '@/types/notification'
 
-const { t } = useI18n()
 const router = useRouter()
 const notificationStore = useNotificationStore()
 
@@ -146,16 +144,6 @@ const handleRelatedClick = (row: Notification) => {
     router.push(row.relatedUrl)
     detailDialogVisible.value = false
   }
-}
-
-const getTypeIcon = (type: NotificationType) => {
-  const iconMap: Record<NotificationType, string> = {
-    approval: 'el-icon-Check',
-    rule: 'el-icon-Cpu',
-    system: 'el-icon-Bell',
-    announcement: 'el-icon-Megaphone'
-  }
-  return iconMap[type] || 'el-icon-Bell'
 }
 
 const getTypeColor = (type: NotificationType) => {

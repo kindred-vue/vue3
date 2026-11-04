@@ -1,20 +1,8 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {
-  getAuditLogListApi,
-  getAuditLogDetailApi,
-  exportAuditLogsApi,
-  getLogStatisticsApi,
-  getRetentionPolicyApi,
-  updateRetentionPolicyApi,
-  cleanOldLogsApi
-} from '@/api/modules/auditLog'
 import type { AuditLog, AuditLogDetail, LogRetentionPolicy } from '@/types/auditLog'
 import { OPERATION_TYPES, MODULE_TYPES, RETENTION_OPTIONS } from '@/types/auditLog'
-
-const { t } = useI18n()
 
 const searchForm = reactive({
   keyword: '',
@@ -64,18 +52,6 @@ const activeTab = ref('list')
 const loadAuditLogList = async () => {
   loading.value = true
   try {
-    const params = {
-      page: pagination.page,
-      size: pagination.size,
-      keyword: searchForm.keyword || undefined,
-      username: searchForm.username || undefined,
-      module: searchForm.module || undefined,
-      operation: searchForm.operation || undefined,
-      status: searchForm.status ? Number(searchForm.status) : undefined,
-      startDate: dateRange.value?.[0],
-      endDate: dateRange.value?.[1]
-    }
-
     const mockLogs: AuditLog[] = [
       {
         id: 1,
@@ -635,7 +611,7 @@ onMounted(() => {
                 <el-table-column prop="date" label="日期" />
                 <el-table-column prop="count" label="操作次数" />
                 <el-table-column label="趋势">
-                  <template #default="{ row, $index }">
+                  <template #default="{ row }">
                     <el-progress
                       :percentage="Math.round(row.count / 100 * 100)"
                       :stroke-width="8"

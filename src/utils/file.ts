@@ -207,7 +207,7 @@ export function compressImage(
           quality
         )
       }
-      img.onerror = () => reject(img.error)
+      img.onerror = () => reject(new Error('Image load failed'))
       img.src = e.target?.result as string
     }
     reader.onerror = () => reject(reader.error)

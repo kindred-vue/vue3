@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import type { Rule, RuleCondition, RuleAction, RuleExecutionLog } from '@/types/rule'
+import type { Rule, RuleCondition, RuleExecutionLog } from '@/types/rule'
 
 export interface RuleListParams {
   page: number

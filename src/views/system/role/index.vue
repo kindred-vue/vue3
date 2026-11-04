@@ -3,16 +3,15 @@ import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { 
-  getRoleListApi, 
   createRoleApi, 
   updateRoleApi, 
   deleteRoleApi, 
   updateRoleStatusApi,
-  assignRolePermissionsApi,
-  getPermissionTreeApi
+  assignRolePermissionsApi
 } from '@/api/modules/user'
-import type { Role, RoleForm, PermissionTree } from '@/types/user'
-import type { RoleListParams, RoleListResponse } from '@/api/modules/user'
+import type { Role, PermissionTree } from '@/types/user'
+import type { RoleForm } from '@/types/role'
+import type { RoleListResponse } from '@/api/modules/user'
 import { DATA_SCOPE } from '@/types/user'
 
 const { t } = useI18n()
@@ -252,13 +251,26 @@ const handleStatusChange = async (row: Role) => {
   }
 }
 
+// 按权限编码查找对应的权限节点 ID
+const findPermissionIdsByCodes = (tree: PermissionTree[], codes: string[]): number[] => {
+  const ids: number[] = []
+  const traverse = (nodes: PermissionTree[]) => {
+    nodes.forEach(node => {
+      if (codes.includes(node.code)) ids.push(node.id)
+      if (node.children) traverse(node.children)
+    })
+  }
+  traverse(tree)
+  return ids
+}
+
 // 分配权限
 const handlePermission = async (row: Role) => {
   currentRole.value = row
   await loadPermissionTree()
   
-  // 设置已选中的权限
-  checkedPermissions.value = row.permissions || []
+  // Role.permissions stores permission codes, while the tree is keyed by id
+  checkedPermissions.value = findPermissionIdsByCodes(permissionTree.value, row.permissions || [])
   permissionDialogVisible.value = true
 }
 
@@ -337,11 +349,6 @@ const handleSavePermissions = async () => {
 // 权限树节点选中变化
 const handleCheckChange = (checkedKeys: number[]) => {
   checkedPermissions.value = checkedKeys
-}
-
-// 数据范围改变
-const handleDataScopeChange = (value: number) => {
-  formData.dataScope = value
 }
 
 onMounted(() => {

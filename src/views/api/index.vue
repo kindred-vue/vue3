@@ -1,33 +1,18 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { ApiKey, ApiEndpoint, ApiCallLog, HttpMethod } from '@/types/api'
 import { DEFAULT_API_ENDPOINTS } from '@/types/api'
-
-const { t } = useI18n()
 
 const activeTab = ref('endpoints')
 const endpoints = ref<ApiEndpoint[]>([])
 const apiKeys = ref<ApiKey[]>([])
 const callLogs = ref<ApiCallLog[]>([])
-const loading = ref(false)
 
 const searchForm = reactive({
   keyword: '',
   method: '' as HttpMethod | '',
   tag: ''
-})
-
-const keySearchForm = reactive({
-  keyword: '',
-  status: ''
-})
-
-const pagination = reactive({
-  page: 1,
-  size: 10,
-  total: 0
 })
 
 const keyDialogVisible = ref(false)

@@ -90,22 +90,29 @@ service.interceptors.response.use(
 
 export default service
 
+// The response interceptor above resolves with the unwrapped payload (`data.data || data`)
+// instead of an AxiosResponse, which axios' static types cannot express, so the
+// resolved value is asserted to T here in one place.
+function unwrap<T>(promise: Promise<unknown>): Promise<T> {
+  return promise as Promise<T>
+}
+
 export function get<T>(url: string, params?: any, config?: AxiosRequestConfig): Promise<T> {
-  return service.get(url, { params, ...config })
+  return unwrap<T>(service.get(url, { params, ...config }))
 }
 
 export function post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-  return service.post(url, data, config)
+  return unwrap<T>(service.post(url, data, config))
 }
 
 export function put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-  return service.put(url, data, config)
+  return unwrap<T>(service.put(url, data, config))
 }
 
 export function del<T>(url: string, params?: any, config?: AxiosRequestConfig): Promise<T> {
-  return service.delete(url, { params, ...config })
+  return unwrap<T>(service.delete(url, { params, ...config }))
 }
 
 export function patch<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-  return service.patch(url, data, config)
+  return unwrap<T>(service.patch(url, data, config))
 }

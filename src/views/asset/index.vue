@@ -4,23 +4,18 @@ import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import AssetForm from '@/components/AssetForm/index.vue'
 import {
-  getAssetListApi,
   getAssetDetailApi,
   createAssetApi,
   updateAssetApi,
   deleteAssetApi,
   importAssetsApi,
   exportAssetsApi,
-  getAssetHistoryApi,
-  getAssetStatisticsApi
+  getAssetHistoryApi
 } from '@/api/modules/asset'
-import { getAssetTypeListApi } from '@/api/modules/assetType'
 import type { Asset, AssetForm as AssetFormType, AssetHistory } from '@/types/asset'
-import type { AssetType, FieldDefinition, StatusDefinition } from '@/types/assetType'
+import type { AssetType } from '@/types/assetType'
 
 const { t } = useI18n()
-
-const assetFormRef = ref<InstanceType<typeof AssetForm>>()
 
 // 搜索表单
 const searchForm = reactive({
@@ -477,11 +472,6 @@ const getStatusType = (status: string) => {
   return map[status] || 'info'
 }
 
-// 获取状态文本
-const getStatusText = (status: string, statuses: StatusDefinition[]) => {
-  return statuses.find(s => s.code === status)?.name || status
-}
-
 onMounted(() => {
   loadAssetList()
   loadAssetTypeList()
@@ -663,7 +653,6 @@ onMounted(() => {
         <el-divider>自定义字段</el-divider>
         
         <AssetForm
-          ref="assetFormRef"
           v-model="formData.fields"
           :fields="currentFields"
           :mode="dialogMode === 'view' ? 'view' : 'edit'"

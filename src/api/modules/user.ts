@@ -1,6 +1,7 @@
 import request from '@/utils/request'
-import type { User, UserForm, LoginParams, LoginResult } from '@/types/user'
-import type { Role, RoleForm, Permission, PermissionTree } from '@/types/user'
+import type { User, UserForm } from '@/types/user'
+import type { Role, Permission, PermissionTree } from '@/types/user'
+import type { RoleForm } from '@/types/role'
 
 export interface UserListParams {
   page: number
