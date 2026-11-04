@@ -30,6 +30,7 @@ export interface AuditLogDetail {
   ip: string
   location?: string
   requestParams?: Record<string, any>
+  responseResult?: any
   oldValue?: Record<string, any>
   newValue?: Record<string, any>
   changes?: FieldChange[]

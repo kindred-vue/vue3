@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import type { ApprovalFlow, ApprovalNode, ApprovalInstance, ApprovalTask, ApprovalRecord, ApprovalForm } from '@/types/approval'
+import type { ApprovalFlow, ApprovalInstance, ApprovalTask, ApprovalRecord, ApprovalForm } from '@/types/approval'
 
 export interface ApprovalFlowListParams {
   page: number
